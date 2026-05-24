@@ -1,0 +1,47 @@
+{
+	"schemaVersion": 1,
+	"id": "monstersmod",
+	"version": "${version}",
+	"name": "MonstersMod",
+	"description": "Mod para meter monsters en el juego, los cuales te darán bufos.",
+	"authors": [
+		"SrPatoMan"
+	],
+	"contact": {
+		"homepage": "https://fabricmc.net/",
+		"sources": "https://github.com/FabricMC/fabric-example-mod"
+	},
+	"license": "CC0-1.0",
+	"icon": "assets/monstersmod/icon.png",
+	"environment": "*",
+	"entrypoints": {
+		"main": [
+			{
+				"value": "manuel.monstersmod.MonstersMod",
+				"adapter": "kotlin"
+			}
+		],
+		"client": [
+			{
+				"value": "manuel.monstersmod.MonstersModClient",
+				"adapter": "kotlin"
+			}
+		],
+		"fabric-datagen": [
+			{
+				"value": "manuel.monstersmod.MonstersModDataGenerator",
+				"adapter": "kotlin"
+			}
+		]
+	},
+	"mixins": [
+		"monstersmod.mixins.json"
+	],
+	"depends": {
+		"fabricloader": ">=0.19.2",
+		"minecraft": "~1.20.1",
+		"java": ">=17",
+		"fabric-api": "*",
+		"fabric-language-kotlin": "*"
+	}
+}
