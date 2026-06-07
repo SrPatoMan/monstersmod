@@ -19,6 +19,7 @@ class MisItems {
         val MANGO_LOCO: Item? = registrarItem("mangoloco", Item(FabricItemSettings()))
         val MONSTER_BLANCO: Item? = registrarItem("monsterblanco", Item(FabricItemSettings()))
         val CUBO_KFC: Item? = registrarItem("cubokfc", Item(FabricItemSettings()))
+        val CUBO_KFC_VACIO: Item? = registrarItem("cubokfcvacio", Item(FabricItemSettings()))
 
 
         // Funciones //

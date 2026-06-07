@@ -12,6 +12,7 @@ import net.minecraft.util.Identifier
 import manuel.monstersmod.items.MisItems.Companion.MANGO_LOCO
 import manuel.monstersmod.items.MisItems.Companion.MONSTER_BLANCO
 import manuel.monstersmod.items.MisItems.Companion.CUBO_KFC
+import manuel.monstersmod.items.MisItems.Companion.CUBO_KFC_VACIO
 
 class MisTabs {
 
@@ -35,6 +36,7 @@ class MisTabs {
             .entries { context, entries -> entries.add(MANGO_LOCO)
                 entries.add(MONSTER_BLANCO)
                 entries.add(CUBO_KFC)
+                entries.add(CUBO_KFC_VACIO)
             }
             .build()
         )
