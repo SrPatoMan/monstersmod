@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "pattern": [
+    "PPP",
+    "PPP",
+    " H "
+  ],
+  "key": {
+    "P": { "item": "minecraft:cooked_chicken" },
+    "H": { "item": "monstersmod:cubokfcvacio" }
+  },
+  "result": {
+    "item": "monstersmod:cubokfc",
+    "count": 1
+  }
+}
