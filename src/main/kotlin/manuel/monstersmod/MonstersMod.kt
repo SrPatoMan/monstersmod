@@ -20,6 +20,7 @@ object MonstersMod : ModInitializer {
 		MisItems.agregarAlInventario(MisItems.MONSTER_BLANCO, ItemGroups.INGREDIENTS)
 		MisItems.agregarAlInventario(MisItems.CUBO_KFC, ItemGroups.INGREDIENTS)
 		MisItems.agregarAlInventario(MisItems.CUBO_KFC_VACIO, ItemGroups.INGREDIENTS)
+		MisItems.agregarAlInventario(MisItems.PESETA, ItemGroups.INGREDIENTS)
 		MisTabs.TAB_MOD_MANUEL
 	}
 }
