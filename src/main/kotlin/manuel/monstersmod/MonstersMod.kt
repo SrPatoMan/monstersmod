@@ -1,7 +1,9 @@
 package manuel.monstersmod
 
 import manuel.monstersmod.items.MisItems
+import manuel.monstersmod.npcs
 import manuel.monstersmod.items.MisItems.Companion.registrarItem
+import manuel.monstersmod.npcs.ModEntities
 import manuel.monstersmod.tabsCreativo.MisTabs
 import net.fabricmc.api.ModInitializer
 import net.fabricmc.fabric.api.item.v1.FabricItemSettings
@@ -22,5 +24,10 @@ object MonstersMod : ModInitializer {
 		MisItems.agregarAlInventario(MisItems.CUBO_KFC_VACIO, ItemGroups.INGREDIENTS)
 		MisItems.agregarAlInventario(MisItems.PESETA, ItemGroups.INGREDIENTS)
 		MisTabs.TAB_MOD_MANUEL
+
+		// Creamos los NPCs
+
+		ModEntities.spawnearNpcs()
+
 	}
 }
