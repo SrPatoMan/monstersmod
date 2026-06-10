@@ -1,7 +1,6 @@
 package manuel.monstersmod
 
 import manuel.monstersmod.items.MisItems
-import manuel.monstersmod.npcs
 import manuel.monstersmod.items.MisItems.Companion.registrarItem
 import manuel.monstersmod.npcs.ModEntities
 import manuel.monstersmod.tabsCreativo.MisTabs
@@ -10,6 +9,8 @@ import net.fabricmc.fabric.api.item.v1.FabricItemSettings
 import net.minecraft.item.Item
 import net.minecraft.item.ItemGroups
 import org.slf4j.LoggerFactory
+import net.fabricmc.fabric.api.object.builder.v1.entity.FabricDefaultAttributeRegistry
+import manuel.monstersmod.npcs.NpcEntity
 
 object MonstersMod : ModInitializer {
 
@@ -25,9 +26,10 @@ object MonstersMod : ModInitializer {
 		MisItems.agregarAlInventario(MisItems.PESETA, ItemGroups.INGREDIENTS)
 		MisTabs.TAB_MOD_MANUEL
 
-		// Creamos los NPCs
-
-		ModEntities.spawnearNpcs()
+		// Llamamos a un NPC para inicializar el object.
+		ModEntities.NPC
+		//Este metodo establece los atributos por defecto para el NPC. Primer argumento el NPC, segundo los atributos del NPC
+		FabricDefaultAttributeRegistry.register(ModEntities.NPC, NpcEntity.createAttributes())
 
 	}
 }
