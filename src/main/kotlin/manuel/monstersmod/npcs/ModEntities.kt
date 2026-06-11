@@ -11,10 +11,10 @@ import manuel.monstersmod.MonstersMod.MOD_ID
 
 object ModEntities {
 
-    val XOKAS: EntityType<NpcEntity> = Registry.register(
+    val XOKAS: EntityType<XokasNpc> = Registry.register(
         Registries.ENTITY_TYPE,
         Identifier(MOD_ID, "xokas"),
-        FabricEntityTypeBuilder.create(SpawnGroup.MISC, ::NpcEntity)
+        FabricEntityTypeBuilder.create(SpawnGroup.MISC, ::XokasNpc)
             .dimensions(EntityDimensions.fixed(0.6f, 1.95f))
             .build()
     )

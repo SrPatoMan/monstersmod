@@ -4,6 +4,8 @@ import manuel.monstersmod.npcs.ModEntities
 import manuel.monstersmod.npcs.NpcRender
 import net.fabricmc.api.ClientModInitializer
 import net.fabricmc.fabric.api.client.rendering.v1.EntityRendererRegistry
+import net.minecraft.util.Identifier
+import manuel.monstersmod.MonstersMod.MOD_ID
 
 object MonstersModClient: ClientModInitializer {
 
@@ -18,7 +20,7 @@ object MonstersModClient: ClientModInitializer {
 
         */
         EntityRendererRegistry.register(ModEntities.XOKAS) {
-            ctx -> NpcRender(ctx)
+            ctx -> NpcRender(ctx, Identifier(MOD_ID, "textures/entity/xokas.png"))
         }
 
     }

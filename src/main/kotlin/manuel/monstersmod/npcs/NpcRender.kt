@@ -5,7 +5,6 @@ import net.minecraft.client.render.entity.model.PlayerEntityModel
 import net.minecraft.client.render.entity.model.EntityModelLayers
 import net.minecraft.client.render.entity.EntityRendererFactory
 import net.minecraft.util.Identifier
-import manuel.monstersmod.MonstersMod.MOD_ID
 
 /*
 
@@ -14,14 +13,12 @@ lo necesario para que el renderer funcione. Nuestra clase de NpcRender hereda de
 la clase de Minecraft para renderizar entidades de forma humana.
 
 */
-class NpcRender(ctx: EntityRendererFactory.Context)
+class NpcRender(ctx: EntityRendererFactory.Context, private val texture: Identifier)
     : BipedEntityRenderer<NpcEntity, PlayerEntityModel<NpcEntity>>(
     ctx,
     PlayerEntityModel(ctx.getPart(EntityModelLayers.PLAYER), false), // Creamos el modelo 3D
     0.5f // Esta float representa la sombra del NPC, puramente visual
 ) {
-
-
     /*
 
     Implementamos nuestra propia logica para el metodo getTexture, devolviendo un identificador con el
@@ -29,7 +26,7 @@ class NpcRender(ctx: EntityRendererFactory.Context)
     skin para nuestro NPC
 
     */
-    override fun getTexture(entity: NpcEntity): Identifier {
-        return Identifier(MOD_ID, "textures/entity/xokas.png")
-    }
+
+    // Le pasamos al constructor de la clase la textura de nuestro NPC y getTexture() simplemente la devolverá, con eso ya tendriamos la skin del NPC.
+    override fun getTexture(entity: NpcEntity): Identifier = texture
 }

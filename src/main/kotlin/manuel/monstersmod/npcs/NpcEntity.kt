@@ -7,6 +7,7 @@ import net.minecraft.entity.attribute.EntityAttributes
 import net.minecraft.entity.mob.PathAwareEntity
 import net.minecraft.entity.player.PlayerEntity
 import net.minecraft.world.World
+import net.minecraft.entity.ai.goal.WanderAroundFarGoal
 
 
 /*
@@ -18,7 +19,7 @@ createAttributes().
 
  */
 
-class NpcEntity(entityType: EntityType<out NpcEntity>, world: World)
+open class NpcEntity(entityType: EntityType<out NpcEntity>, world: World)
     : PathAwareEntity(entityType, world) {
 
     companion object {
@@ -46,6 +47,7 @@ class NpcEntity(entityType: EntityType<out NpcEntity>, world: World)
      */
 
     override fun initGoals() {
-        goalSelector.add(1, LookAtEntityGoal(this, PlayerEntity::class.java, 6f))
+        goalSelector.add(1, WanderAroundFarGoal(this, 0.5)) // 0.5 es la velocidad a la que camina.
+        goalSelector.add(2, LookAtEntityGoal(this, PlayerEntity::class.java, 6f))
     }
 }
