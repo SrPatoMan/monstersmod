@@ -17,7 +17,7 @@ object MonstersModClient: ClientModInitializer {
         un objeto que contiene todo lo necesario para que el renderer funcione.
 
         */
-        EntityRendererRegistry.register(ModEntities.NPC) {
+        EntityRendererRegistry.register(ModEntities.XOKAS) {
             ctx -> NpcRender(ctx)
         }
 

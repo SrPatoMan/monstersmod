@@ -29,6 +29,8 @@ class NpcEntity(entityType: EntityType<out NpcEntity>, world: World)
         }
     }
 
+    override fun isCustomNameVisible() = true
+
     /*
 
     initGoals() es el metodo que define el comportamiento de la IA, lo sobreescribimos para añadir nuestra propia logica.

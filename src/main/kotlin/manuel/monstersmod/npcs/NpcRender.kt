@@ -30,6 +30,6 @@ class NpcRender(ctx: EntityRendererFactory.Context)
 
     */
     override fun getTexture(entity: NpcEntity): Identifier {
-        return Identifier(MOD_ID, "textures/entity/npc.png")
+        return Identifier(MOD_ID, "textures/entity/xokas.png")
     }
 }
