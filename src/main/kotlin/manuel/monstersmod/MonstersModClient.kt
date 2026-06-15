@@ -6,6 +6,8 @@ import net.fabricmc.api.ClientModInitializer
 import net.fabricmc.fabric.api.client.rendering.v1.EntityRendererRegistry
 import net.minecraft.util.Identifier
 import manuel.monstersmod.MonstersMod.MOD_ID
+import manuel.monstersmod.network.DialogueNetworking
+import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking
 
 object MonstersModClient: ClientModInitializer {
 
@@ -23,7 +25,21 @@ object MonstersModClient: ClientModInitializer {
             ctx -> NpcRender(ctx, Identifier(MOD_ID, "textures/entity/xokas.png"))
         }
 
+        ClientPlayNetworking.registerGlobalReceiver(DialogueNetworking.OPEN_DIALOGUE) { client, handler, buf, responseSender ->
+            // Leemos los strings del buffer que envia el servidor. Lo leen en el mismo orden que se escribió en el buffer.
+            val nodeId = buf.readString()
+            val text = buf.readString()
+
+            // Leemos la cantidad de opciones del buffer.
+            val size = buf.readInt()
+            val options = (0 until size).map { buf.readString() } // Itrera entre el cero y el numero de opciones que tenemos y para cada iteracion lee el string
+
+            client.execute {
+                // Aquí abriremos la Screen custom, pasándole text y options
+                // client.setScreen(DialogueScreen(nodeId, text, options))
+            }
+        }
+
+
     }
-
-
 }

@@ -8,12 +8,40 @@ import net.minecraft.util.ActionResult
 import net.minecraft.util.Hand
 import net.minecraft.world.World
 import net.minecraft.text.Text
+import manuel.monstersmod.dialogos.DialogueNode
+import manuel.monstersmod.dialogos.DialogueOption
+import manuel.monstersmod.dialogos.DialogueAction
 
 class XokasNpc(type: EntityType<out XokasNpc>, world: World) : NpcEntity(type, world) {
 
     override fun initGoals() {
         goalSelector.add(1, WanderAroundFarGoal(this, 0.5))
         goalSelector.add(2, LookAtEntityGoal(this, PlayerEntity::class.java, 6f))
+    }
+
+    /* to crea el par clave valor para el diccionario. Creamos un map y no una lista por comodidad de busqueda.
+        Guardamos el Map en la variable nodes.
+    */
+    companion object Dialogue {
+        val nodes = mapOf(
+            "intro" to DialogueNode(
+                id = "intro",
+                text = "¡Buenas! Soy cathivi... digo, el xokas, que tal tio?? Me he mudado hace poco a esta ciudad y no conozco a mucha gente la verdad. Encantado de conocerte",
+                options = listOf(
+                    DialogueOption("Buenas xokas, encantado ", "intro2")
+                )
+            ),
+            "intro2" to DialogueNode(
+                id = "intro2",
+                text = "Oye, ya se que nos acabamos de conocer, pero me podrias ayudar con una cosilla? Necesito que me consigas un cablo HDMI para performar a maximo nivel. Me lo podrias conseguir",
+                options = listOf(
+                    DialogueOption("Si claro!!", null, DialogueAction.ACCEPT_QUEST),
+                    DialogueOption("No, que te jodan", null, DialogueAction.DECLINE_QUEST)
+                )
+            )
+        )
+
+        const val START_NODE = "intro"
     }
 
     /* Funcion que se ejecuta cuando el jugador hace click derecho en el NPC. pl
