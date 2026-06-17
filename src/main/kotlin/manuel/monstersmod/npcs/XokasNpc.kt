@@ -11,6 +11,8 @@ import net.minecraft.text.Text
 import manuel.monstersmod.dialogos.DialogueNode
 import manuel.monstersmod.dialogos.DialogueOption
 import manuel.monstersmod.dialogos.DialogueAction
+import manuel.monstersmod.network.DialogueNetworking
+import net.minecraft.server.network.ServerPlayerEntity
 
 class XokasNpc(type: EntityType<out XokasNpc>, world: World) : NpcEntity(type, world) {
 
@@ -54,8 +56,12 @@ class XokasNpc(type: EntityType<out XokasNpc>, world: World) : NpcEntity(type, w
     */
 
     override fun interactMob(player: PlayerEntity, hand: Hand): ActionResult {
-        if (player.world.isClient) return ActionResult.SUCCESS // Cuando haces click derecho el cliente se ejecuta dos veces, una en el server y otra en el servidor. Para que el mensaje no se envie dos veces, en caso de estar en el cliente nos salimos del metodo, por lo que solo se ejecuta el mensaje desde el servidor. Es un check necesario.
-        player.sendMessage(Text.literal("¡Te dispararia a quemarropa si tuviera la oportunidad!"), true) // sendMessage() envia un mensaje al chat del jugador que interactuo con el NPC. Primer parametro texto del mensaje, segundo parametro si aparece en el action bar.
-        return ActionResult.SUCCESS
+        if (hand != Hand.MAIN_HAND) return ActionResult.PASS // Si el jugador hace clic con la mano secundaria, ignoramos la interaccion y la pasamos al siguiente handler
+        if (player.world.isClient) return ActionResult.SUCCESS // Si estamos en el cliente, salimos sin hacer nada para que la logica solo se ejecute en el servidor
+
+        val node = Dialogue.nodes[Dialogue.START_NODE]!! // Obtenemos el nodo inicial del arbol de dialogo del Xokas accediendo al map por su clave (START_NODE = "intro"). Los !! indican que estamos seguros de que no es null, si lo fuera lanzaria una excepcion
+        DialogueNetworking.sendOpenDialogue(player as ServerPlayerEntity, node) // Mandamos el nodo al cliente para que abra la pantalla de dialogo. Hacemos un cast de PlayerEntity a ServerPlayerEntity porque sendOpenDialogue lo requiere, y sabemos que en este punto estamos en el servidor
+
+        return ActionResult.SUCCESS // Le decimos a Minecraft que la interaccion se proceso correctamente
     }
 }

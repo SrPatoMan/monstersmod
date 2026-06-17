@@ -7,6 +7,7 @@ import net.minecraft.network.PacketByteBuf
 import net.minecraft.server.network.ServerPlayerEntity
 import net.minecraft.util.Identifier
 import manuel.monstersmod.MonstersMod.MOD_ID
+import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking
 
 /*
 
@@ -39,4 +40,13 @@ object DialogueNetworking {
         // Una vez esta todo escrito, enviamos el buffer al jugador
         ServerPlayNetworking.send(player, OPEN_DIALOGUE, buf) // Metodo de la API de Fabric para enviar un paquete de red del servidor a un cliente concreto. Le pasamos el jugador, el id del canal y el buffer que enviaremos.
     }
+
+    // Funcion que llama el cliente cuando el jugador pulsa un botón. Le pasamos el id del nodo actual y el indice del boton que pulsó el jugador.
+    fun sendDialogueChoice(nodeId: String, optionIndex: Int) {
+        val buf = PacketByteBufs.create() // Creamos un buffer vacío
+        buf.writeString(nodeId) // Escribimos el id del nodo
+        buf.writeInt(optionIndex) // Escribimos el indice del botón
+        ClientPlayNetworking.send(DIALOGUE_CHOICE, buf) // Enviamos el buffer al servidor, le pasamos el id del canal.
+    }
+
 }
