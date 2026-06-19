@@ -28,7 +28,7 @@ class XokasNpc(type: EntityType<out XokasNpc>, world: World) : NpcEntity(type, w
         val nodes = mapOf(
             "intro" to DialogueNode(
                 id = "intro",
-                text = "¡Buenas! Soy cathivi... digo, el xokas, que tal tio?? Me he mudado hace poco a esta ciudad y no conozco a mucha gente la verdad. Encantado de conocerte",
+                text = "¡Buenas! Soy cathivi... digo, el xokas, que tal tio?? Esto es una pruebaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
                 options = listOf(
                     DialogueOption("Buenas xokas, encantado ", "intro2")
                 )
@@ -58,10 +58,9 @@ class XokasNpc(type: EntityType<out XokasNpc>, world: World) : NpcEntity(type, w
     override fun interactMob(player: PlayerEntity, hand: Hand): ActionResult {
         if (hand != Hand.MAIN_HAND) return ActionResult.PASS // Si el jugador hace clic con la mano secundaria, ignoramos la interaccion y la pasamos al siguiente handler
         if (player.world.isClient) return ActionResult.SUCCESS // Si estamos en el cliente, salimos sin hacer nada para que la logica solo se ejecute en el servidor
-
         val node = Dialogue.nodes[Dialogue.START_NODE]!! // Obtenemos el nodo inicial del arbol de dialogo del Xokas accediendo al map por su clave (START_NODE = "intro"). Los !! indican que estamos seguros de que no es null, si lo fuera lanzaria una excepcion
         DialogueNetworking.sendOpenDialogue(player as ServerPlayerEntity, node) // Mandamos el nodo al cliente para que abra la pantalla de dialogo. Hacemos un cast de PlayerEntity a ServerPlayerEntity porque sendOpenDialogue lo requiere, y sabemos que en este punto estamos en el servidor
 
-        return ActionResult.SUCCESS // Le decimos a Minecraft que la interaccion se proceso correctamente
+        return ActionResult.SUCCESS // Le decimos a Minecraft que la interaccion se proceso correctamente. Devolvemos el resultado de la interacción con el NPC
     }
 }

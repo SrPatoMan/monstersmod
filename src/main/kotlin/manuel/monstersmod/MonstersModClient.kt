@@ -6,6 +6,7 @@ import net.fabricmc.api.ClientModInitializer
 import net.fabricmc.fabric.api.client.rendering.v1.EntityRendererRegistry
 import net.minecraft.util.Identifier
 import manuel.monstersmod.MonstersMod.MOD_ID
+import manuel.monstersmod.gui.DialogueScreen
 import manuel.monstersmod.network.DialogueNetworking
 import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking
 
@@ -34,9 +35,10 @@ object MonstersModClient: ClientModInitializer {
             val size = buf.readInt()
             val options = (0 until size).map { buf.readString() } // Itrera entre el cero y el numero de opciones que tenemos y para cada iteracion lee el string
 
+            // client es la instancia de MinecraftClient, el objeto principal del juego en el lado del cliente. Lo que hace es poner a la cola un bloque de codigo para que se ejecute en el render thread (el hilo de ejecucion del cliente)
             client.execute {
                 // Aquí abriremos la Screen custom, pasándole text y options
-                // client.setScreen(DialogueScreen(nodeId, text, options))
+                client.setScreen(DialogueScreen(nodeId, text, options))
             }
         }
 
