@@ -22,12 +22,18 @@ object MonstersModClient: ClientModInitializer {
         un objeto que contiene todo lo necesario para que el renderer funcione.
 
         */
+        // Registramos los renders
         EntityRendererRegistry.register(ModEntities.XOKAS) {
             ctx -> NpcRender(ctx, Identifier(MOD_ID, "textures/entity/xokas.png"))
         }
 
+        EntityRendererRegistry.register(ModEntities.ALEXELCAPO) {
+            ctx -> NpcRender(ctx, Identifier(MOD_ID, "textures/entity/alexelcapo.png"))
+        }
+
         ClientPlayNetworking.registerGlobalReceiver(DialogueNetworking.OPEN_DIALOGUE) { client, handler, buf, responseSender ->
             // Leemos los strings del buffer que envia el servidor. Lo leen en el mismo orden que se escribió en el buffer.
+            val npcId = buf.readString()
             val nodeId = buf.readString()
             val text = buf.readString()
 
@@ -38,7 +44,7 @@ object MonstersModClient: ClientModInitializer {
             // client es la instancia de MinecraftClient, el objeto principal del juego en el lado del cliente. Lo que hace es poner a la cola un bloque de codigo para que se ejecute en el render thread (el hilo de ejecucion del cliente)
             client.execute {
                 // Aquí abriremos la Screen custom, pasándole text y options
-                client.setScreen(DialogueScreen(nodeId, text, options))
+                client.setScreen(DialogueScreen(npcId, nodeId, text, options))
             }
         }
 

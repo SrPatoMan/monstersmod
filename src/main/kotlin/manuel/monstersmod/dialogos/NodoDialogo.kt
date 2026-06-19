@@ -9,7 +9,7 @@ data class DialogueOption(
 data class DialogueNode(
     val id: String,             // identificador único del nodo"
     val text: String,           // lo que dice el NPC
-    val options: List<DialogueOption>
+    val options: List<DialogueOption> // Lista de opciones del jugador
 )
 
 // Enum con las acciones que se puedan llevar a cabo por parte del jugador

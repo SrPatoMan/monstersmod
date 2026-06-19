@@ -7,6 +7,7 @@ import net.minecraft.client.gui.widget.ButtonWidget
 import net.minecraft.text.Text
 
 class DialogueScreen(
+    private val npcId: String,
     private val nodeId: String,
     private val npcText: String,
     private val options: List<String>
@@ -22,7 +23,7 @@ class DialogueScreen(
             addDrawableChild(
                 ButtonWidget.builder(Text.literal(optionText)) { // Creamos un boton con el texto de esa opción
 
-                    DialogueNetworking.sendDialogueChoice(nodeId, index) // Enviamos la info al servidor
+                    DialogueNetworking.sendDialogueChoice(npcId, nodeId, index) // Enviamos la info al servidor
                     client!!.setScreen(null) // cierra la pantalla
 
                     // cuando el jugador pulsa el botón

@@ -19,4 +19,12 @@ object ModEntities {
             .build()
     )
 
+    val ALEXELCAPO: EntityType<XokasNpc> = Registry.register(
+        Registries.ENTITY_TYPE,
+        Identifier(MOD_ID, "alexelcapo"),
+        FabricEntityTypeBuilder.create(SpawnGroup.MISC, ::XokasNpc)
+            .dimensions(EntityDimensions.fixed(0.6f, 1.95f))
+            .build()
+    )
+
 }

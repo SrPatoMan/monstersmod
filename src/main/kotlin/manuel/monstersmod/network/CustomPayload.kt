@@ -26,24 +26,25 @@ object DialogueNetworking {
     val DIALOGUE_CHOICE: Identifier = Identifier(MOD_ID, "dialogue_choice") // Identificador para cuando el cliente manda al servidor
 
     // Esta funcion la llamará el servidor cuando quiera mostrar un nodo de diálogo al jugador. ServerPlayerEntity es una subclase de la clase PlayerEntity con funciones especificas del servidor agregadas.
-    fun sendOpenDialogue(player: ServerPlayerEntity, node: DialogueNode) {
-        val buf: PacketByteBuf = PacketByteBufs.create() // Creamos un buffer vacío donde meterá el servidor los datos antes de mandarlos.
+    fun sendOpenDialogue(player: ServerPlayerEntity, npcId: String, node: DialogueNode) {
+        val buf: PacketByteBuf = PacketByteBufs.create()
 
-        buf.writeString(node.id) // Escribimos el id del nodo en el buffer
-        buf.writeString(node.text) // Escribimos el texto en el buffer
+        buf.writeString(npcId)
+        buf.writeString(node.id)
+        buf.writeString(node.text)
 
-        buf.writeInt(node.options.size) // Escribimos el numero de elementos del options
+        buf.writeInt(node.options.size)
         node.options.forEach { option ->
             buf.writeString(option.text)
-        } // Como options es una lista de opciones, hacemos un forEach para iterarla y escribir en el buffer la propiedad text (el texto de la opcion) para cada una de las opciones.
+        }
 
-        // Una vez esta todo escrito, enviamos el buffer al jugador
-        ServerPlayNetworking.send(player, OPEN_DIALOGUE, buf) // Metodo de la API de Fabric para enviar un paquete de red del servidor a un cliente concreto. Le pasamos el jugador, el id del canal y el buffer que enviaremos.
+        ServerPlayNetworking.send(player, OPEN_DIALOGUE, buf)
     }
 
     // Funcion que llama el cliente cuando el jugador pulsa un botón. Le pasamos el id del nodo actual y el indice del boton que pulsó el jugador.
-    fun sendDialogueChoice(nodeId: String, optionIndex: Int) {
+    fun sendDialogueChoice(npcId: String, nodeId: String, optionIndex: Int) {
         val buf = PacketByteBufs.create() // Creamos un buffer vacío
+        buf.writeString(npcId) // Mandamos el ID del NPC al buffer.
         buf.writeString(nodeId) // Escribimos el id del nodo
         buf.writeInt(optionIndex) // Escribimos el indice del botón
         ClientPlayNetworking.send(DIALOGUE_CHOICE, buf) // Enviamos el buffer al servidor, le pasamos el id del canal.
