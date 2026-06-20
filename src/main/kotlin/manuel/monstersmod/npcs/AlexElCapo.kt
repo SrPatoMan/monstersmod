@@ -14,7 +14,7 @@ import manuel.monstersmod.dialogos.DialogueAction
 import manuel.monstersmod.network.DialogueNetworking
 import net.minecraft.server.network.ServerPlayerEntity
 
-class AlexElCapo(type: EntityType<out XokasNpc>, world: World) : NpcEntity(type, world) {
+class AlexElCapo(type: EntityType<out AlexElCapo>, world: World) : NpcEntity(type, world) {
 
     override fun initGoals() {
         goalSelector.add(1, WanderAroundFarGoal(this, 0.5))
