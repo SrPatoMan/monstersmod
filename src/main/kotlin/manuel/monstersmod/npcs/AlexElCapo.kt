@@ -28,17 +28,25 @@ class AlexElCapo(type: EntityType<out XokasNpc>, world: World) : NpcEntity(type,
         val nodes = mapOf(
             "intro" to DialogueNode(
                 id = "intro",
-                text = "¡Buenas! Soy cathivi... digo, el xokas, que tal tio??",
+                text = "Ey camarada que pasa? Te comento tío, mi primo Manolo ha perdido la edición coleccionista del Final Fantasy 7 por ahí, podrías ayudarme a recuperarla?",
                 options = listOf(
-                    DialogueOption("Buenas xokas, encantado ", "intro2")
+                    DialogueOption("Por supuesto tío!!", "questFinalFantasy", DialogueAction.ACCEPT_QUEST),
+                    DialogueOption("Joder Final Fantasy 7 flipo colega que va colega paso", null, DialogueAction.DECLINE_QUEST)
                 )
             ),
-            "intro2" to DialogueNode(
-                id = "intro2",
-                text = "Oye, ya se que nos acabamos de conocer, pero me podrias ayudar con una cosilla? Necesito que me consigas un cablo HDMI para performar a maximo nivel. Me lo podrias conseguir",
+            "questFinalFantasy" to DialogueNode(
+                id = "questFinalFantasy",
+                text = "Perfecto colegón, pues te comento. El otro día estuvimos en el yate del novio marroquí de mi esposa y creo que se le cayó por ahí. Es un barco muy guapo, en mitad del agua ¿sabes?",
                 options = listOf(
-                    DialogueOption("Si claro!!", null, DialogueAction.ACCEPT_QUEST),
-                    DialogueOption("No, que te jodan", null, DialogueAction.DECLINE_QUEST)
+                    DialogueOption("Continuar", "questFinalFantasy2")
+                )
+            ),
+
+            "questFinalFantasy2" to DialogueNode(
+                id = "questFinalFantasy2",
+                text = "Debe ser que se lo robaron o algo, el dice que se le debió de caer, pero no me sorprendería que se lo robaran, había mucho facha de ultraderecha",
+                options = listOf(
+                    DialogueOption("Continuar", null)
                 )
             )
         )

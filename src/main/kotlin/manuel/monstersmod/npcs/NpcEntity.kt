@@ -50,4 +50,7 @@ open class NpcEntity(entityType: EntityType<out NpcEntity>, world: World)
         goalSelector.add(1, WanderAroundFarGoal(this, 0.5)) // 0.5 es la velocidad a la que camina.
         goalSelector.add(2, LookAtEntityGoal(this, PlayerEntity::class.java, 6f))
     }
+
+    // Funcion para que no despawnen los NPCs.
+    override fun cannotDespawn(): Boolean = true
 }

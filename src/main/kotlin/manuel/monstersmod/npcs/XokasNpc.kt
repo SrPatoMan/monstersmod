@@ -28,19 +28,28 @@ class XokasNpc(type: EntityType<out XokasNpc>, world: World) : NpcEntity(type, w
         val nodes = mapOf(
             "intro" to DialogueNode(
                 id = "intro",
-                text = "¡Buenas! Soy cathivi... digo, el xokas, que tal tio??",
+                text = "Ey, ¿que tal estas? Me llamo cativi... digo... Xokas. Bueno, ¿Supongo que me conoceras no? Quiero decir, soy el numero 1 en Twitch y esas cosas joder. ¿Que tal estas? Encantado de conocerte por cierto.",
                 options = listOf(
-                    DialogueOption("Buenas xokas, encantado ", "intro2")
+                    DialogueOption("Buenas xokas, encantado", "intro2")
                 )
             ),
             "intro2" to DialogueNode(
                 id = "intro2",
-                text = "Oye, ya se que nos acabamos de conocer, pero me podrias ayudar con una cosilla? Necesito que me consigas un cablo HDMI para performar a maximo nivel. Me lo podrias conseguir",
+                text = "La verdad que no llevo mucho tiempo en estas tierras ¿sabes?, Antes vivia en Galicia, pero me tuve que ir porque me andaban buscando unos podemitas para arrebatarme la vida... Ya sabes como están las cosas, últimamente está pasando mucho...",
                 options = listOf(
-                    DialogueOption("Si claro!!", null, DialogueAction.ACCEPT_QUEST),
-                    DialogueOption("No, que te jodan", null, DialogueAction.DECLINE_QUEST)
+                    DialogueOption("Continuar", "intro3")
+                )
+            ),
+
+            "intro3" to DialogueNode(
+                id = "intro3",
+                text = "Pero bueno, ahora estoy por estos lares, listo para performar a high level. Oye tio, te puedo pedir un favor?",
+                options = listOf(
+                    DialogueOption("Claro que si tilin", null, DialogueAction.ACCEPT_QUEST),
+                    DialogueOption("Na bro, en esta estas solo lil dog", null, DialogueAction.DECLINE_QUEST)
                 )
             )
+
         )
 
         const val START_NODE = "intro"
