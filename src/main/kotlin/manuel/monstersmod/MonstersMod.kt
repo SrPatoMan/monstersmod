@@ -81,18 +81,18 @@ object MonstersMod : ModInitializer {
 					DialogueAction.ACCEPT_QUEST -> {
 						val questId = option.questId
 						if (questId != null && QuestManager.iniciarQuest(player, questId)) {
-							player.sendMessage(Text.literal("¡Quest aceptada!"), false)
+							player.sendMessage(Text.literal("Así me gusta chavalin, ponte a currar para MI!!!"), false)
 						}
 					}
 					DialogueAction.DECLINE_QUEST -> {
-						player.sendMessage(Text.literal("Quizás otro día..."), false)
+						player.sendMessage(Text.literal("Cagón, ya vendrás a mi cuando lo necesites..."), false)
 					}
 					DialogueAction.COMPLETE_QUEST -> {
 						val questId = option.questId
 						if (questId != null && QuestManager.intentarCompletarQuest(player, questId)) {
-							player.sendMessage(Text.literal("¡Quest completada!"), false)
+							player.sendMessage(Text.literal("¡Quest completada mi rey!"), false)
 						} else {
-							player.sendMessage(Text.literal("Todavía no has terminado esa misión."), false)
+							player.sendMessage(Text.literal("Todavía no has terminado esa misión mi rey."), false)
 						}
 					}
 					else -> {}

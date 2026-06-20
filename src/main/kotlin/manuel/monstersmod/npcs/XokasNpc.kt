@@ -12,6 +12,8 @@ import manuel.monstersmod.dialogos.DialogueNode
 import manuel.monstersmod.dialogos.DialogueOption
 import manuel.monstersmod.dialogos.DialogueAction
 import manuel.monstersmod.network.DialogueNetworking
+import manuel.monstersmod.quests.QuestManager
+import manuel.monstersmod.quests.QuestRegistry
 import net.minecraft.server.network.ServerPlayerEntity
 
 class XokasNpc(type: EntityType<out XokasNpc>, world: World) : NpcEntity(type, world) {
@@ -45,8 +47,40 @@ class XokasNpc(type: EntityType<out XokasNpc>, world: World) : NpcEntity(type, w
                 id = "intro3",
                 text = "Pero bueno, ahora estoy por estos lares, listo para performar a high level. Oye tio, te puedo pedir un favor?",
                 options = listOf(
-                    DialogueOption("Claro que si tilin", null, DialogueAction.ACCEPT_QUEST),
+                    DialogueOption(
+                        "Claro que si tilin", null,
+                        DialogueAction.ACCEPT_QUEST, questId = QuestRegistry.FAVOR_DE_XOKAS.id
+                    ),
                     DialogueOption("Na bro, en esta estas solo lil dog", null, DialogueAction.DECLINE_QUEST)
+                )
+            ),
+
+            "intro4" to DialogueNode(
+                id = "intro4",
+                text = "PENDIENTE",
+                options = listOf(
+                    DialogueOption("Continuar", null,)
+                )
+            ),
+
+            // Nodo al que se llega (ver interactMob) cuando el jugador ya ha cumplido el objetivo de la quest.
+            "entregarFavorXokas" to DialogueNode(
+                id = "entregarFavorXokas",
+                text = "PENDIENTE",
+                options = listOf(
+                    DialogueOption(
+                        "Toma tu recompensa", null,
+                        DialogueAction.COMPLETE_QUEST, questId = QuestRegistry.FAVOR_DE_XOKAS.id
+                    )
+                )
+            ),
+
+            // Nodo al que se llega cuando la quest ya esta aceptada pero el objetivo todavia no se ha cumplido.
+            "esperandoFavorXokas" to DialogueNode(
+                id = "esperandoFavorXokas",
+                text = "PENDIENTE",
+                options = listOf(
+                    DialogueOption("Sigo en ello", null)
                 )
             )
 
@@ -67,8 +101,20 @@ class XokasNpc(type: EntityType<out XokasNpc>, world: World) : NpcEntity(type, w
     override fun interactMob(player: PlayerEntity, hand: Hand): ActionResult {
         if (hand != Hand.MAIN_HAND) return ActionResult.PASS // Si el jugador hace clic con la mano secundaria, ignoramos la interaccion y la pasamos al siguiente handler
         if (player.world.isClient) return ActionResult.SUCCESS // Si estamos en el cliente, salimos sin hacer nada para que la logica solo se ejecute en el servidor
-        val node = Dialogue.nodes[Dialogue.START_NODE]!! // Obtenemos el nodo inicial del arbol de dialogo del Xokas accediendo al map por su clave (START_NODE = "intro"). Los !! indican que estamos seguros de que no es null, si lo fuera lanzaria una excepcion
-        DialogueNetworking.sendOpenDialogue(player as ServerPlayerEntity, "xokas", node) // Mandamos el nodo al cliente para que abra la pantalla de dialogo. Hacemos un cast de PlayerEntity a ServerPlayerEntity porque sendOpenDialogue lo requiere, y sabemos que en este punto estamos en el servidor
+
+        val serverPlayer = player as ServerPlayerEntity
+        val questId = QuestRegistry.FAVOR_DE_XOKAS.id
+
+        // Según el estado de la quest del jugador, abrimos un nodo de dialogo distinto: la intro normal,
+        // un recordatorio si la tiene activa pero aún no ha cumplido el objetivo, o el nodo de entrega si ya puede cobrarla.
+        val nodeId = when {
+            QuestManager.listaParaEntregar(serverPlayer, questId) -> "entregarFavorXokas"
+            QuestManager.estaActiva(serverPlayer, questId) -> "esperandoFavorXokas"
+            else -> Dialogue.START_NODE
+        }
+
+        val node = Dialogue.nodes[nodeId]!! // Obtenemos el nodo correspondiente del arbol de dialogo del Xokas accediendo al map por su clave. Los !! indican que estamos seguros de que no es null, si lo fuera lanzaria una excepcion
+        DialogueNetworking.sendOpenDialogue(serverPlayer, "xokas", node) // Mandamos el nodo al cliente para que abra la pantalla de dialogo.
 
         return ActionResult.SUCCESS // Le decimos a Minecraft que la interaccion se proceso correctamente. Devolvemos el resultado de la interacción con el NPC
     }
