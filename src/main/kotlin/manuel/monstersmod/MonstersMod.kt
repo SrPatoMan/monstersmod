@@ -6,11 +6,14 @@ import manuel.monstersmod.items.MisItems.Companion.registrarItem
 import manuel.monstersmod.network.DialogueNetworking
 import manuel.monstersmod.npcs.AlexElCapo
 import manuel.monstersmod.npcs.ModEntities
+import manuel.monstersmod.quests.QuestManager
 import manuel.monstersmod.tabsCreativo.MisTabs
 import net.fabricmc.api.ModInitializer
+import net.fabricmc.fabric.api.entity.event.v1.ServerLivingEntityEvents
 import net.fabricmc.fabric.api.item.v1.FabricItemSettings
 import net.minecraft.item.Item
 import net.minecraft.item.ItemGroups
+import net.minecraft.server.network.ServerPlayerEntity
 import org.slf4j.LoggerFactory
 import net.fabricmc.fabric.api.`object`.builder.v1.entity.FabricDefaultAttributeRegistry
 import manuel.monstersmod.npcs.NpcEntity
@@ -76,14 +79,32 @@ object MonstersMod : ModInitializer {
 				// Si la opción tiene una acción, la ejecutamos
 				when (option.action) {
 					DialogueAction.ACCEPT_QUEST -> {
-						player.sendMessage(Text.literal("¡Quest aceptada!"), false)
+						val questId = option.questId
+						if (questId != null && QuestManager.iniciarQuest(player, questId)) {
+							player.sendMessage(Text.literal("¡Quest aceptada!"), false)
+						}
 					}
 					DialogueAction.DECLINE_QUEST -> {
 						player.sendMessage(Text.literal("Quizás otro día..."), false)
 					}
+					DialogueAction.COMPLETE_QUEST -> {
+						val questId = option.questId
+						if (questId != null && QuestManager.intentarCompletarQuest(player, questId)) {
+							player.sendMessage(Text.literal("¡Quest completada!"), false)
+						} else {
+							player.sendMessage(Text.literal("Todavía no has terminado esa misión."), false)
+						}
+					}
 					else -> {}
 				}
 			}
+		}
+
+		// Cada vez que muere una entidad en el servidor, avisamos al QuestManager por si el jugador
+		// que la mató tiene alguna quest activa de tipo KillEntity que dependa de ese tipo de entidad.
+		ServerLivingEntityEvents.AFTER_DEATH.register { entity, damageSource ->
+			val jugador = damageSource.attacker as? ServerPlayerEntity ?: return@register
+			QuestManager.registrarMuerte(jugador, entity.type)
 		}
 
 	}

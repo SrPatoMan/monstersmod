@@ -3,7 +3,8 @@ package manuel.monstersmod.dialogos
 data class DialogueOption(
     val text: String,           // texto del botón, ej: "Sí, acepto la misión"
     val nextNodeId: String?,    // a qué nodo lleva (null = cierra el diálogo)
-    val action: DialogueAction? = null // acción opcional al elegir esta opción
+    val action: DialogueAction? = null, // acción opcional al elegir esta opción
+    val questId: String? = null // id de la quest (en QuestRegistry) sobre la que actúa la action, si aplica
 )
 
 data class DialogueNode(
