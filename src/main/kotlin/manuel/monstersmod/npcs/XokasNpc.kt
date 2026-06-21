@@ -48,39 +48,39 @@ class XokasNpc(type: EntityType<out XokasNpc>, world: World) : NpcEntity(type, w
                 text = "Pero bueno, ahora estoy por estos lares, listo para performar a high level. Oye tio, te puedo pedir un favor?",
                 options = listOf(
                     DialogueOption(
-                        "Claro que si tilin", null,
-                        DialogueAction.ACCEPT_QUEST, questId = QuestRegistry.FAVOR_DE_XOKAS.id
+                        "Claro que si tilin", "encontrar_el_tronco_de_butter1", DialogueAction.ACCEPT_QUEST, questId = QuestRegistry.FAVOR_DE_XOKAS.id
                     ),
                     DialogueOption("Na bro, en esta estas solo lil dog", null, DialogueAction.DECLINE_QUEST)
                 )
             ),
 
-            "intro4" to DialogueNode(
-                id = "intro4",
-                text = "PENDIENTE",
+            // Explicacion de la mision del tronco de butter
+            "encontrar_el_tronco_de_butter1" to DialogueNode(
+                id = "encontrar_el_tronco_de_butter1",
+                text = "Pues verás te comento, el otro día estaba yo cocinando y tenia todos los ingredientes... O eso pensaba joder, porque resulta que me faltaba un buen tronco de butter. Necesito que me ayudes a encontrarlo. Seguro que lo encuentras en alguna Dangeon o en alguna mina a la que vayas. Si lo encuentras, no dudes en traermelo ",
                 options = listOf(
                     DialogueOption("Continuar", null,)
                 )
             ),
 
-            // Nodo al que se llega (ver interactMob) cuando el jugador ya ha cumplido el objetivo de la quest.
+            // Nodo para entregar el tronco de butter
             "entregarFavorXokas" to DialogueNode(
                 id = "entregarFavorXokas",
-                text = "PENDIENTE",
+                text = "God damm!! Sabia que podias encontrar el tronco de butter joder, ahora si me voy a poder hacer unos platos de puta madre joder",
                 options = listOf(
                     DialogueOption(
-                        "Toma tu recompensa", null,
+                        "Aquí tengo el tronco de butter", null,
                         DialogueAction.COMPLETE_QUEST, questId = QuestRegistry.FAVOR_DE_XOKAS.id
                     )
                 )
             ),
 
-            // Nodo al que se llega cuando la quest ya esta aceptada pero el objetivo todavia no se ha cumplido.
+            // No has entregado el tronco de butter todavia.
             "esperandoFavorXokas" to DialogueNode(
                 id = "esperandoFavorXokas",
-                text = "PENDIENTE",
+                text = "Eres un inutil!!! PONTE A BUSCAR MI TRONCO DE BUTTER GOD DAMMMMITT!!!!!! TE MATARE CON MIS PROPIAS MANOS SI NO ME LO TRAES",
                 options = listOf(
-                    DialogueOption("Sigo en ello", null)
+                    DialogueOption("Ya voy cativipy, no te enfades", null)
                 )
             )
 

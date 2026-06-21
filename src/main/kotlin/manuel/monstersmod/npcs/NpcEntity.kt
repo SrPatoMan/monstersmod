@@ -9,6 +9,7 @@ import net.minecraft.entity.player.PlayerEntity
 import net.minecraft.world.World
 import net.minecraft.entity.ai.goal.WanderAroundFarGoal
 import net.minecraft.entity.damage.DamageSource
+import net.minecraft.entity.damage.DamageTypes
 
 
 /*
@@ -55,8 +56,11 @@ open class NpcEntity(entityType: EntityType<out NpcEntity>, world: World)
     // Funcion para que no despawnen los NPCs.
     override fun cannotDespawn(): Boolean = true
 
-    // Función que vuelve inmortales a los NPCs
+    // Función que vuelve inmortales a los NPCs, salvo si se usa el comando /kill (DamageTypes.GENERIC_KILL)
     override fun damage(source: DamageSource, amount: Float): Boolean {
+        if (source.isOf(DamageTypes.GENERIC_KILL)) {
+            return super.damage(source, amount)
+        }
         return false
     }
 }
