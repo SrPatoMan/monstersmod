@@ -80,7 +80,7 @@ class XokasNpc(type: EntityType<out XokasNpc>, world: World) : NpcEntity(type, w
                 id = "esperandoFavorXokas",
                 text = "Eres un inutil!!! PONTE A BUSCAR MI TRONCO DE BUTTER GOD DAMMMMITT!!!!!! TE MATARE CON MIS PROPIAS MANOS SI NO ME LO TRAES",
                 options = listOf(
-                    DialogueOption("Ya voy cativipy, no te enfades", null)
+                    DialogueOption("Ya voy cativipy, no te enfades ", null)
                 )
             )
 
