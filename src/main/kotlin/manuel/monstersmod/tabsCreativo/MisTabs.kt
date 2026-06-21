@@ -15,6 +15,7 @@ import manuel.monstersmod.items.MisItems.Companion.CUBO_KFC
 import manuel.monstersmod.items.MisItems.Companion.CUBO_KFC_VACIO
 import manuel.monstersmod.items.MisItems.Companion.FINAL_FANTASY_7
 import manuel.monstersmod.items.MisItems.Companion.PESETA
+import manuel.monstersmod.items.MisItems.Companion.BUTTER
 
 class MisTabs {
 
@@ -41,6 +42,7 @@ class MisTabs {
                 entries.add(CUBO_KFC_VACIO)
                 entries.add(PESETA)
                 entries.add(FINAL_FANTASY_7)
+                entries.add(BUTTER)
             }
             .build()
         )
