@@ -10,7 +10,8 @@ data class DialogueOption(
 data class DialogueNode(
     val id: String,             // identificador único del nodo"
     val text: String,           // lo que dice el NPC
-    val options: List<DialogueOption> // Lista de opciones del jugador
+    val options: List<DialogueOption>, // Lista de opciones del jugador
+    val sound: String? = null  // nombre del sonido custom a reproducir al abrir este nodo (sin namespace), ej: "xokas_intro". Null = sin sonido.
 )
 
 // Enum con las acciones que se puedan llevar a cabo por parte del jugador

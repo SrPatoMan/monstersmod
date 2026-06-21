@@ -33,7 +33,7 @@ class XokasNpc(type: EntityType<out XokasNpc>, world: World) : NpcEntity(type, w
                 text = "Ey, ¿que tal estas? Me llamo cativi... digo... Xokas. Bueno, ¿Supongo que me conoceras no? Quiero decir, soy el numero 1 en Twitch y esas cosas joder. ¿Que tal estas? Encantado de conocerte por cierto.",
                 options = listOf(
                     DialogueOption("Buenas xokas, encantado", "intro2")
-                )
+                ),
             ),
             "intro2" to DialogueNode(
                 id = "intro2",
@@ -80,8 +80,9 @@ class XokasNpc(type: EntityType<out XokasNpc>, world: World) : NpcEntity(type, w
                 id = "esperandoFavorXokas",
                 text = "Eres un inutil!!! PONTE A BUSCAR MI TRONCO DE BUTTER GOD DAMMMMITT!!!!!! TE MATARE CON MIS PROPIAS MANOS SI NO ME LO TRAES",
                 options = listOf(
-                    DialogueOption("Ya voy cativipy, no te enfades ", null)
-                )
+                    DialogueOption("Ya voy cativipy, no te enfades", null)
+                ),
+                sound = "eres_el_perfecto_ejemplo"
             )
 
         )

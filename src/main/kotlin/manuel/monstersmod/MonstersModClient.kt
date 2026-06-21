@@ -9,8 +9,13 @@ import manuel.monstersmod.MonstersMod.MOD_ID
 import manuel.monstersmod.gui.DialogueScreen
 import manuel.monstersmod.network.DialogueNetworking
 import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking
+import net.minecraft.client.sound.PositionedSoundInstance
+import net.minecraft.sound.SoundEvent
 
 object MonstersModClient: ClientModInitializer {
+
+    // Guardamos el sonido de dialogo que está sonando para poder cortarlo si se abre otro nodo con sonido antes de que termine.
+    private var currentDialogueSound: PositionedSoundInstance? = null
 
     override fun onInitializeClient() {
 
@@ -36,6 +41,7 @@ object MonstersModClient: ClientModInitializer {
             val npcId = buf.readString()
             val nodeId = buf.readString()
             val text = buf.readString()
+            val soundName = buf.readString() // Vacío si el nodo no tiene sonido custom asociado
 
             // Leemos la cantidad de opciones del buffer.
             val size = buf.readInt()
@@ -45,6 +51,18 @@ object MonstersModClient: ClientModInitializer {
             client.execute {
                 // Aquí abriremos la Screen custom, pasándole text y options
                 client.setScreen(DialogueScreen(npcId, nodeId, text, options))
+
+                // Si el nodo trae un sonido custom, lo reproducimos. SoundEvent.of crea el evento "al vuelo"
+                // a partir del id sin necesidad de registrarlo en el Registry, solo necesita una entrada en sounds.json.
+                if (soundName.isNotEmpty()) {
+                    // Cortamos el sonido de diálogo anterior si seguía sonando, para que no se solapen.
+                    currentDialogueSound?.let { client.soundManager.stop(it) }
+
+                    val soundEvent = SoundEvent.of(Identifier(MOD_ID, soundName))
+                    val soundInstance = PositionedSoundInstance.master(soundEvent, 1.0f)
+                    currentDialogueSound = soundInstance
+                    client.soundManager.play(soundInstance)
+                }
             }
         }
 

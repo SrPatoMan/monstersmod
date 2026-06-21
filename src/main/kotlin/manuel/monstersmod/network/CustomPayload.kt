@@ -32,6 +32,7 @@ object DialogueNetworking {
         buf.writeString(npcId)
         buf.writeString(node.id)
         buf.writeString(node.text)
+        buf.writeString(node.sound ?: "") // String vacío = el nodo no tiene sonido custom
 
         buf.writeInt(node.options.size)
         node.options.forEach { option ->
