@@ -52,6 +52,7 @@ class MisItems {
         )
 
         val PESETA: Item? = registrarItem("peseta", Item(FabricItemSettings()))
+        val FINAL_FANTASY_7: Item? = registrarItem("finalfantasy", Item(FabricItemSettings()))
 
 
         // Funciones //
