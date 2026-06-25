@@ -3,5 +3,10 @@
     "sounds": [
       "monstersmod:eres_el_perfecto_ejemplo_xokas"
     ]
+  },
+  "momo_amigo": {
+    "sounds": [
+      "monstersmod:momo_amigo"
+    ]
   }
 }

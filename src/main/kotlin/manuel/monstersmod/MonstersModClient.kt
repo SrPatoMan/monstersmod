@@ -3,6 +3,7 @@ package manuel.monstersmod
 import manuel.monstersmod.npcs.ModEntities
 import manuel.monstersmod.npcs.NpcRender
 import net.fabricmc.api.ClientModInitializer
+import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents
 import net.fabricmc.fabric.api.client.rendering.v1.EntityRendererRegistry
 import net.minecraft.util.Identifier
 import manuel.monstersmod.MonstersMod.MOD_ID
@@ -14,8 +15,16 @@ import net.minecraft.sound.SoundEvent
 
 object MonstersModClient: ClientModInitializer {
 
-    // Guardamos el sonido de dialogo que está sonando para poder cortarlo si se abre otro nodo con sonido antes de que termine.
     private var currentDialogueSound: PositionedSoundInstance? = null
+
+    // -1 significa que el jugador no está en zona de cueva, >= 0 es el contador de ticks hasta el siguiente sonido
+    private var caveSoundTimer = -1
+
+    private fun randomCaveInterval(): Int {
+        val min = 15 * 60 * 20 // 18000 ticks = 15 minutos
+        val max = 40 * 60 * 20 // 48000 ticks = 40 minutos
+        return min + (Math.random() * (max - min)).toInt()
+    }
 
     override fun onInitializeClient() {
 
@@ -27,6 +36,28 @@ object MonstersModClient: ClientModInitializer {
         un objeto que contiene todo lo necesario para que el renderer funcione.
 
         */
+        ClientTickEvents.END_CLIENT_TICK.register { client ->
+            val player = client.player ?: return@register
+
+            if (player.blockY >= -40) {
+                caveSoundTimer = -1
+                return@register
+            }
+
+            if (caveSoundTimer == -1) {
+                caveSoundTimer = randomCaveInterval()
+                return@register
+            }
+
+            caveSoundTimer--
+            if (caveSoundTimer <= 0) {
+                caveSoundTimer = randomCaveInterval()
+                val soundEvent = SoundEvent.of(Identifier(MOD_ID, "momo_amigo"))
+                val soundInstance = PositionedSoundInstance.master(soundEvent, 0.4f)
+                client.soundManager.play(soundInstance)
+            }
+        }
+
         // Registramos los renders
         EntityRendererRegistry.register(ModEntities.XOKAS) {
             ctx -> NpcRender(ctx, Identifier(MOD_ID, "textures/entity/xokas.png"))
