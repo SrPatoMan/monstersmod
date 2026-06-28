@@ -36,6 +36,17 @@ class MisItems {
 
         val MONSTER_BLANCO: Item? = registrarItem("monsterblanco", Item(FabricItemSettings()
             .maxCount(1)
+            .food(
+                FoodComponent.Builder()
+                    .hunger(0)
+                    .alwaysEdible()
+                    .saturationModifier(0f)
+                    .statusEffect(
+                        StatusEffectInstance(StatusEffects.STRENGTH, 1200, 2),
+                        1f
+                    )
+                    .build()
+            )
         ))
 
         val CUBO_KFC_VACIO: Item? = registrarItem("cubokfcvacio", Item(FabricItemSettings()))
