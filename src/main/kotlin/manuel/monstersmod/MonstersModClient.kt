@@ -21,8 +21,8 @@ object MonstersModClient: ClientModInitializer {
     private var caveSoundTimer = -1
 
     private fun randomCaveInterval(): Int {
-        val min = 15 * 60 * 20 // 18000 ticks = 15 minutos
-        val max = 40 * 60 * 20 // 48000 ticks = 40 minutos
+        val min = 15 * 60 * 20
+        val max = 40 * 60 * 20
         return min + (Math.random() * (max - min)).toInt()
     }
 
@@ -53,7 +53,7 @@ object MonstersModClient: ClientModInitializer {
             if (caveSoundTimer <= 0) {
                 caveSoundTimer = randomCaveInterval()
                 val soundEvent = SoundEvent.of(Identifier(MOD_ID, "momo_amigo"))
-                val soundInstance = PositionedSoundInstance.master(soundEvent, 0.4f)
+                val soundInstance = PositionedSoundInstance.master(soundEvent, 0.9f)
                 client.soundManager.play(soundInstance)
             }
         }
