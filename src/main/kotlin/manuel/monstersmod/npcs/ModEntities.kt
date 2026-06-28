@@ -27,4 +27,12 @@ object ModEntities {
             .build()
     )
 
+    val MAESTROSIMON: EntityType<MaestroSimon> = Registry.register(
+        Registries.ENTITY_TYPE,
+        Identifier(MOD_ID, "maestrosimon"),
+        FabricEntityTypeBuilder.create(SpawnGroup.MISC, ::MaestroSimon)
+            .dimensions(EntityDimensions.fixed(0.6f, 1.95f))
+            .build()
+    )
+
 }

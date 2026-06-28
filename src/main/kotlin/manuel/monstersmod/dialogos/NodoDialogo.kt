@@ -4,7 +4,9 @@ data class DialogueOption(
     val text: String,           // texto del botón, ej: "Sí, acepto la misión"
     val nextNodeId: String?,    // a qué nodo lleva (null = cierra el diálogo)
     val action: DialogueAction? = null, // acción opcional al elegir esta opción
-    val questId: String? = null // id de la quest (en QuestRegistry) sobre la que actúa la action, si aplica
+    val questId: String? = null, // id de la quest (en QuestRegistry) sobre la que actúa la action, si aplica
+    val itemId: String? = null,  // id del item a comprar (para BUY_ITEM)
+    val price: Int? = null       // precio en pesetas (para BUY_ITEM)
 )
 
 data class DialogueNode(
@@ -19,5 +21,6 @@ enum class DialogueAction {
     ACCEPT_QUEST,
     DECLINE_QUEST,
     COMPLETE_QUEST,
-    GIVE_ITEM
+    GIVE_ITEM,
+    BUY_ITEM
 }

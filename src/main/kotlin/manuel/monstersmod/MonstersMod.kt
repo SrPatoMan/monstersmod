@@ -5,6 +5,7 @@ import manuel.monstersmod.items.MisItems
 import manuel.monstersmod.items.MisItems.Companion.registrarItem
 import manuel.monstersmod.network.DialogueNetworking
 import manuel.monstersmod.npcs.AlexElCapo
+import manuel.monstersmod.npcs.MaestroSimon
 import manuel.monstersmod.npcs.ModEntities
 import manuel.monstersmod.quests.QuestManager
 import manuel.monstersmod.tabsCreativo.MisTabs
@@ -19,6 +20,7 @@ import net.fabricmc.fabric.api.`object`.builder.v1.entity.FabricDefaultAttribute
 import manuel.monstersmod.npcs.NpcEntity
 import manuel.monstersmod.npcs.XokasNpc
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking
+import net.minecraft.item.ItemStack
 import net.minecraft.text.Text
 
 object MonstersMod : ModInitializer {
@@ -38,9 +40,11 @@ object MonstersMod : ModInitializer {
 		// Llamamos a los NPCs para inicializar el object.
 		ModEntities.XOKAS
 		ModEntities.ALEXELCAPO
+		ModEntities.MAESTROSIMON
 		//Este metodo establece los atributos por defecto para el NPC. Primer argumento el NPC, segundo los atributos del NPC
 		FabricDefaultAttributeRegistry.register(ModEntities.XOKAS, NpcEntity.createAttributes())
 		FabricDefaultAttributeRegistry.register(ModEntities.ALEXELCAPO, NpcEntity.createAttributes())
+		FabricDefaultAttributeRegistry.register(ModEntities.MAESTROSIMON, NpcEntity.createAttributes())
 
 
 		ServerPlayNetworking.registerGlobalReceiver(DialogueNetworking.DIALOGUE_CHOICE) { server, player, handler, buf, responseSender ->
@@ -52,6 +56,7 @@ object MonstersMod : ModInitializer {
 			val node = when (npcId) {
 				"xokas" -> XokasNpc.Dialogue.nodes[nodeId]
 				"alexelcapo" -> AlexElCapo.Dialogue.nodes[nodeId]
+				"maestrosimon" -> MaestroSimon.Dialogue.nodes[nodeId]
 				else -> null
 			}
 
@@ -69,6 +74,7 @@ object MonstersMod : ModInitializer {
 					val nextNode = when (npcIdFinal) {
 						"xokas" -> XokasNpc.Dialogue.nodes[nextNodeId]
 						"alexelcapo" -> AlexElCapo.Dialogue.nodes[nextNodeId]
+						"maestrosimon" -> MaestroSimon.Dialogue.nodes[nextNodeId]
 						else -> null
 					}
 					if (nextNode != null) {
@@ -93,6 +99,43 @@ object MonstersMod : ModInitializer {
 							player.sendMessage(Text.literal("¡Quest completada mi rey!"), false)
 						} else {
 							player.sendMessage(Text.literal("Todavía no has terminado esa misión mi rey."), false)
+						}
+					}
+					DialogueAction.BUY_ITEM -> {
+						val itemId = option.itemId
+						val price = option.price
+						if (itemId != null && price != null) {
+							val peseta = MisItems.PESETA!!
+							val totalPesetas = player.inventory.main.sumOf { if (it.isOf(peseta)) it.count else 0 } +
+									player.inventory.offHand.sumOf { if (it.isOf(peseta)) it.count else 0 }
+							if (totalPesetas >= price) {
+								var remaining = price
+								for (stack in player.inventory.main) {
+									if (stack.isOf(peseta) && remaining > 0) {
+										val toRemove = minOf(stack.count, remaining)
+										stack.decrement(toRemove)
+										remaining -= toRemove
+									}
+								}
+								for (stack in player.inventory.offHand) {
+									if (stack.isOf(peseta) && remaining > 0) {
+										val toRemove = minOf(stack.count, remaining)
+										stack.decrement(toRemove)
+										remaining -= toRemove
+									}
+								}
+								val itemToGive = when (itemId) {
+									"monsterblanco" -> MisItems.MONSTER_BLANCO
+									"mangoloco" -> MisItems.MANGO_LOCO
+									else -> null
+								}
+								if (itemToGive != null) {
+									player.giveItemStack(ItemStack(itemToGive))
+									player.sendMessage(Text.literal("¡Aquí tienes! Vuelve cuando quieras."), false)
+								}
+							} else {
+								player.sendMessage(Text.literal("No tienes suficientes pesetas."), false)
+							}
 						}
 					}
 					else -> {}

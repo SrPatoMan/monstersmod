@@ -67,6 +67,10 @@ object MonstersModClient: ClientModInitializer {
             ctx -> NpcRender(ctx, Identifier(MOD_ID, "textures/entity/alexelcapo.png"))
         }
 
+        EntityRendererRegistry.register(ModEntities.MAESTROSIMON) {
+            ctx -> NpcRender(ctx, Identifier(MOD_ID, "textures/entity/simon.png"))
+        }
+
         ClientPlayNetworking.registerGlobalReceiver(DialogueNetworking.OPEN_DIALOGUE) { client, handler, buf, responseSender ->
             // Leemos los strings del buffer que envia el servidor. Lo leen en el mismo orden que se escribió en el buffer.
             val npcId = buf.readString()
