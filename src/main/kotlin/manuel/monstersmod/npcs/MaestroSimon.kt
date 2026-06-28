@@ -2,7 +2,6 @@ package manuel.monstersmod.npcs
 
 import net.minecraft.entity.EntityType
 import net.minecraft.entity.ai.goal.LookAtEntityGoal
-import net.minecraft.entity.ai.goal.WanderAroundFarGoal
 import net.minecraft.entity.player.PlayerEntity
 import net.minecraft.util.ActionResult
 import net.minecraft.util.Hand
@@ -16,8 +15,7 @@ import net.minecraft.server.network.ServerPlayerEntity
 class MaestroSimon(type: EntityType<out MaestroSimon>, world: World) : NpcEntity(type, world) {
 
     override fun initGoals() {
-        goalSelector.add(1, WanderAroundFarGoal(this, 0.5))
-        goalSelector.add(2, LookAtEntityGoal(this, PlayerEntity::class.java, 6f))
+        goalSelector.add(1, LookAtEntityGoal(this, PlayerEntity::class.java, 6f))
     }
 
     companion object Dialogue {
