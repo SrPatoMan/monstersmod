@@ -12,9 +12,15 @@ import manuel.monstersmod.tabsCreativo.MisTabs
 import net.fabricmc.api.ModInitializer
 import net.fabricmc.fabric.api.entity.event.v1.ServerLivingEntityEvents
 import net.fabricmc.fabric.api.item.v1.FabricItemSettings
+import net.fabricmc.fabric.api.loot.v2.LootTableEvents
 import net.minecraft.item.Item
 import net.minecraft.item.ItemGroups
+import net.minecraft.loot.LootPool
+import net.minecraft.loot.entry.ItemEntry
+import net.minecraft.loot.function.SetCountLootFunction
+import net.minecraft.loot.provider.number.UniformLootNumberProvider
 import net.minecraft.server.network.ServerPlayerEntity
+import net.minecraft.util.Identifier
 import org.slf4j.LoggerFactory
 import net.fabricmc.fabric.api.`object`.builder.v1.entity.FabricDefaultAttributeRegistry
 import manuel.monstersmod.npcs.NpcEntity
@@ -140,6 +146,26 @@ object MonstersMod : ModInitializer {
 					}
 					else -> {}
 				}
+			}
+		}
+
+		LootTableEvents.MODIFY.register { _, _, id, tableBuilder, _ ->
+			val cantidad = when {
+				id.path.contains("abandoned_mineshaft") || id == Identifier("minecraft", "chests/simple_dungeon") ->
+					UniformLootNumberProvider.create(5f, 20f)
+				id.namespace != "minecraft" && id.path.contains("dungeon") ->
+					UniformLootNumberProvider.create(15f, 50f)
+				else -> null
+			}
+			if (cantidad != null) {
+				tableBuilder.pool(
+					LootPool.builder()
+						.rolls(UniformLootNumberProvider.create(1f, 1f))
+						.with(ItemEntry.builder(MisItems.PESETA)
+							.apply(SetCountLootFunction.builder(cantidad))
+						)
+						.build()
+				)
 			}
 		}
 
