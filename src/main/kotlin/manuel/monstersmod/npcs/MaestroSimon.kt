@@ -22,14 +22,14 @@ class MaestroSimon(type: EntityType<out MaestroSimon>, world: World) : NpcEntity
         val nodes = mapOf(
             "intro" to DialogueNode(
                 id = "intro",
-                text = "¡Bienvenido a mi tienda! Soy Maestro Simón, el mejor comerciante de estas tierras. ¿Qué deseas comprar?",
+                text = "Por favor comprame la mercancía, le debo 2000 euros a un camello y 300 a otro, sino les pago me van a matar!! Por favor, te lo suplico me muero de hambre!!!",
                 options = listOf(
                     DialogueOption(
-                        text = "Monster Blanco (20 pesetas)",
+                        text = "Monster Blanco (30 pesetas)",
                         nextNodeId = "intro",
                         action = DialogueAction.BUY_ITEM,
                         itemId = "monsterblanco",
-                        price = 20
+                        price = 30
                     ),
                     DialogueOption(
                         text = "Mango Loco (10 pesetas)",
@@ -39,7 +39,7 @@ class MaestroSimon(type: EntityType<out MaestroSimon>, world: World) : NpcEntity
                         price = 10
                     ),
                     DialogueOption(
-                        text = "Nada, adiós",
+                        text = "Más tarde te pillo bro",
                         nextNodeId = null
                     )
                 )
