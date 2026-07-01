@@ -1,0 +1,21 @@
+{
+  "display": {
+    "icon": {"item": "minecraft:obsidian"},
+    "title": {"translate": "advancements.monstersmod.minando_coltan.title"},
+    "description": {"translate": "advancements.monstersmod.minando_coltan.description"},
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "parent": "minecraft:story/smelt_iron",
+  "criteria": {
+    "get_obsidian": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [{"items": ["minecraft:obsidian"]}]
+      }
+    }
+  },
+  "requirements": [["get_obsidian"]]
+}

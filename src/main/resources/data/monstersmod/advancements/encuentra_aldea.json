@@ -1,0 +1,23 @@
+{
+  "display": {
+    "icon": {"item": "minecraft:white_bed"},
+    "title": {"translate": "advancements.monstersmod.encuentra_aldea.title"},
+    "description": {"translate": "advancements.monstersmod.encuentra_aldea.description"},
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "parent": "minecraft:adventure/root",
+  "criteria": {
+    "enter_village": {
+      "trigger": "minecraft:location",
+      "conditions": {
+        "location": {
+          "structure": "minecraft:village"
+        }
+      }
+    }
+  },
+  "requirements": [["enter_village"]]
+}

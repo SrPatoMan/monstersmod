@@ -1,0 +1,21 @@
+{
+  "display": {
+    "icon": {"item": "minecraft:anvil"},
+    "title": {"translate": "advancements.monstersmod.fp_herreria.title"},
+    "description": {"translate": "advancements.monstersmod.fp_herreria.description"},
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "parent": "minecraft:story/smelt_iron",
+  "criteria": {
+    "craft_anvil": {
+      "trigger": "minecraft:recipe_crafted",
+      "conditions": {
+        "recipe_id": "minecraft:anvil"
+      }
+    }
+  },
+  "requirements": [["craft_anvil"]]
+}

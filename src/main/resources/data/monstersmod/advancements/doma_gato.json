@@ -1,0 +1,21 @@
+{
+  "display": {
+    "icon": {"item": "minecraft:cod"},
+    "title": {"translate": "advancements.monstersmod.doma_gato.title"},
+    "description": {"translate": "advancements.monstersmod.doma_gato.description"},
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "parent": "minecraft:husbandry/tame_an_animal",
+  "criteria": {
+    "tame_cat": {
+      "trigger": "minecraft:tame_animal",
+      "conditions": {
+        "entity": {"type": "minecraft:cat"}
+      }
+    }
+  },
+  "requirements": [["tame_cat"]]
+}

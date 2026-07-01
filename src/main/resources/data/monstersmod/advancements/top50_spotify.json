@@ -1,0 +1,28 @@
+{
+  "display": {
+    "icon": {"item": "minecraft:music_disc_13"},
+    "title": {"translate": "advancements.monstersmod.top50_spotify.title"},
+    "description": {"translate": "advancements.monstersmod.top50_spotify.description"},
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "parent": "minecraft:adventure/root",
+  "criteria": {
+    "play_disc": {
+      "trigger": "minecraft:item_used_on_block",
+      "conditions": {
+        "location": [
+          {
+            "condition": "minecraft:location_check",
+            "predicate": {
+              "block": {"blocks": ["minecraft:jukebox"]}
+            }
+          }
+        ]
+      }
+    }
+  },
+  "requirements": [["play_disc"]]
+}

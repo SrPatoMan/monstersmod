@@ -1,0 +1,22 @@
+{
+  "display": {
+    "icon": {"item": "minecraft:milk_bucket"},
+    "title": {"translate": "advancements.monstersmod.deslechado.title"},
+    "description": {"translate": "advancements.monstersmod.deslechado.description"},
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "parent": "minecraft:husbandry/tame_an_animal",
+  "criteria": {
+    "ordenar_vaca": {
+      "trigger": "minecraft:player_interacted_with_entity",
+      "conditions": {
+        "item": {"items": ["minecraft:bucket"]},
+        "entity": {"type": "minecraft:cow"}
+      }
+    }
+  },
+  "requirements": [["ordenar_vaca"]]
+}

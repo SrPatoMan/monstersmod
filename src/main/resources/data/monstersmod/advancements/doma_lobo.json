@@ -1,0 +1,21 @@
+{
+  "display": {
+    "icon": {"item": "minecraft:bone"},
+    "title": {"translate": "advancements.monstersmod.doma_lobo.title"},
+    "description": {"translate": "advancements.monstersmod.doma_lobo.description"},
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "parent": "minecraft:husbandry/tame_an_animal",
+  "criteria": {
+    "tame_wolf": {
+      "trigger": "minecraft:tame_animal",
+      "conditions": {
+        "entity": {"type": "minecraft:wolf"}
+      }
+    }
+  },
+  "requirements": [["tame_wolf"]]
+}
