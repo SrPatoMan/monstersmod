@@ -48,10 +48,12 @@ object MonstersMod : ModInitializer {
 		ModEntities.XOKAS
 		ModEntities.ALEXELCAPO
 		ModEntities.MAESTROSIMON
+		ModEntities.MADURO
 		//Este metodo establece los atributos por defecto para el NPC. Primer argumento el NPC, segundo los atributos del NPC
 		FabricDefaultAttributeRegistry.register(ModEntities.XOKAS, NpcEntity.createAttributes())
 		FabricDefaultAttributeRegistry.register(ModEntities.ALEXELCAPO, NpcEntity.createAttributes())
 		FabricDefaultAttributeRegistry.register(ModEntities.MAESTROSIMON, NpcEntity.createAttributes())
+		FabricDefaultAttributeRegistry.register(ModEntities.MADURO, NpcEntity.createAttributes())
 
 		// Llamamos al companion object para inicializar y registrar los cuadros personalizados.
 		MisPaintings.WILLY
