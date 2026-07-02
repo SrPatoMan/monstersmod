@@ -7,6 +7,7 @@ import manuel.monstersmod.network.DialogueNetworking
 import manuel.monstersmod.npcs.AlexElCapo
 import manuel.monstersmod.npcs.MaestroSimon
 import manuel.monstersmod.npcs.ModEntities
+import manuel.monstersmod.paintings.MisPaintings
 import manuel.monstersmod.quests.QuestManager
 import manuel.monstersmod.tabsCreativo.MisTabs
 import net.fabricmc.api.ModInitializer
@@ -51,6 +52,9 @@ object MonstersMod : ModInitializer {
 		FabricDefaultAttributeRegistry.register(ModEntities.XOKAS, NpcEntity.createAttributes())
 		FabricDefaultAttributeRegistry.register(ModEntities.ALEXELCAPO, NpcEntity.createAttributes())
 		FabricDefaultAttributeRegistry.register(ModEntities.MAESTROSIMON, NpcEntity.createAttributes())
+
+		// Llamamos al companion object para inicializar y registrar los cuadros personalizados.
+		MisPaintings.WILLY
 
 
 		ServerPlayNetworking.registerGlobalReceiver(DialogueNetworking.DIALOGUE_CHOICE) { server, player, handler, buf, responseSender ->
